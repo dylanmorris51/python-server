@@ -114,6 +114,9 @@ class HandleRequests(BaseHTTPRequestHandler):
         if resource == "locations":
             new_item = create_location(post_body)
 
+        if resource == "employees":
+            new_item = create_employee(post_body)
+
         # Encode the new animal and send in response
         self.wfile.write(f"{new_item}".encode())
 
