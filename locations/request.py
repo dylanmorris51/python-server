@@ -33,7 +33,7 @@ def get_single_location(id):
         if location["id"] == id:
             requested_location = location
 
-        return requested_location
+            return requested_location
 
 def create_location(location):
     max_id = LOCATIONS[-1]["id"]
@@ -52,3 +52,9 @@ def delete_location(id):
 
     if location_index >= 0:
         LOCATIONS.pop(location_index)
+
+def update_location(id, new_location):
+    for index, location in enumerate(LOCATIONS):
+        if location["id"] == id:
+            LOCATIONS[index] = new_location
+            break
