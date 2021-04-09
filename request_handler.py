@@ -136,7 +136,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         # Parse the URL
         (resource, id) = self.parse_url(self.path)
 
-        # Delete a single animal from the list
+        # Delete a single item from the list
         if resource == "animals":
             delete_animal(id)
 
@@ -149,8 +149,8 @@ class HandleRequests(BaseHTTPRequestHandler):
         if resource == "locations":
             delete_location(id)
 
-        # Encode the new animal and send in response
-        self.wfile.write("".encode)
+        # Encode the new item and send in response
+        self.wfile.write("".encode())
 
 # This function is not inside the class. It is the starting
 # point of this application.

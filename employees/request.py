@@ -51,7 +51,7 @@ def create_employee(employee):
     EMPLOYEES.append(employee)
     return employee
 
-def delete_employee(employee):
+def delete_employee(id):
     employee_index = -1
 
     for index, employee in enumerate(EMPLOYEES):

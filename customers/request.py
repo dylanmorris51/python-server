@@ -41,7 +41,7 @@ def create_customer(customer):
 def delete_customer(id):
     customer_index = -1
 
-    for index, animal in enumerate(CUSTOMERS):
+    for index, customer in enumerate(CUSTOMERS):
         if customer["id"] == id:
             customer_index = index
 
