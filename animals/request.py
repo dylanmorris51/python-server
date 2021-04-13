@@ -65,7 +65,7 @@ def get_all_animals():
             # Note that the database fields are specified in
             # the exact order of the parameters defined in the
             # Animal class above
-            animal = Animal(row['id'], row['name]', row['breed'], row['status'], row['location_id'], row['customer_id']])
+            animal = Animal(row['id'], row['name'], row['breed'], row['status'], row['location_id'], row['customer_id'])
 
             animals.append(animal.__dict__)
 
