@@ -31,8 +31,6 @@ def get_all_locations():
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
 
-        db_cursor()
-
         db_cursor.execute("""
             SELECT
                 l.id,
@@ -50,7 +48,7 @@ def get_all_locations():
             locations.append(location.__dict__)
 
         return json.dumps(locations)
-        
+
 def get_single_location(id):
     requested_location = None
 

@@ -36,7 +36,7 @@ def get_all_animals():
     # Open a connection to the database
     with sqlite3.connect("./kennel.db") as conn:
 
-        # JUst use these. It's a black box
+        # Just use these. It's a black box
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
 
