@@ -78,3 +78,10 @@ SELECT
     e.name,
     e.location_id
 FROM employee e
+
+SELECT
+    l.id,
+    l.name,
+    l.address
+FROM location l
+WHERE l.id = 1
