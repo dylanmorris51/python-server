@@ -64,3 +64,10 @@ SELECT
     a.customer_id
 FROM animal a
 WHERE a.id = 3
+
+SELECT
+    c.id,
+    c.name,
+    c.address,
+    c.email
+FROM customer c
