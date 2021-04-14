@@ -72,3 +72,9 @@ SELECT
     c.email
 FROM customer c
 WHERE c.id = 1
+
+SELECT
+    e.id,
+    e.name,
+    e.location_id
+FROM employee e

@@ -61,11 +61,12 @@ def get_single_customer(id):
                 c.address,
                 c.email
             FROM customer c
-        """)
+            WHERE c.id = ?
+        """, (id,))
 
         data = db_cursor.fetchone()
 
-        customer = Customer(row['id'], row['name'], row['address'], row['email'])
+        customer = Customer(data['id'], data['name'], data['address'], data['email'])
         return json.dumps(customer.__dict__)
 
 

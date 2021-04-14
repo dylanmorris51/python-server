@@ -1,4 +1,6 @@
-
+import sqlite3
+import json
+from models import Locations
 
 LOCATIONS = [
     {
@@ -24,8 +26,31 @@ LOCATIONS = [
 ]
 
 def get_all_locations():
-    return LOCATIONS
+    with sqlite3.connect("./kennel.db") as conn:
 
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        db_cursor()
+
+        db_cursor.execute("""
+            SELECT
+                l.id,
+                l.name,
+                l.address
+            FROM location l
+        """)
+
+        locations = []
+        dataset = db_cursor.fetchall()
+
+        for row in dataset:
+
+            location = Locations(row['id'], row['name'], row['address'])
+            locations.append(location.__dict__)
+
+        return json.dumps(locations)
+        
 def get_single_location(id):
     requested_location = None
 
