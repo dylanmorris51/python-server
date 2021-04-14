@@ -71,3 +71,4 @@ SELECT
     c.address,
     c.email
 FROM customer c
+WHERE c.id = 1
