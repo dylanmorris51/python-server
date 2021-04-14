@@ -34,7 +34,7 @@ def get_all_customers():
                 c.id,
                 c.name,
                 c.address,
-                c.email,
+                c.email
             FROM customer c
         """)
 
@@ -59,7 +59,7 @@ def get_single_customer(id):
                 c.id,
                 c.name,
                 c.address,
-                c.email,
+                c.email
             FROM customer c
         """)
 
