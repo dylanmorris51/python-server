@@ -18,19 +18,33 @@ class HandleRequests(BaseHTTPRequestHandler):
         # at index 2
         path_params = path.split("/")
         resource = path_params[1]
-        id = None
+        
+        if "?" in resource:
+            #GIVEN: /customers?email=jenna@solis.com
+
+            param = resource.split("?")[1] #email=jenna@solis.com
+            resource = resource.split("?")[0] #'customers'
+            pair = param.split("=") # [ 'email', 'jenna@solis.com']
+            key = pair[0] #email
+            value = pair[1] #'jenna@solis.com'
+
+            return (resource, key, value)
+        
+        # Else if no query string parameter
+        else:
+            id = None
 
         # Try to get the item at index 2
-        try:
-            # Convert the string "1" to the integer 1
-            # This is the new parseInt()
-            id = int(path_params[2])
-        except IndexError:
-            pass # No route parameter exists: /animals
-        except ValueError:
-            pass # Request had trailing slash: /animals/
+            try:
+                # Convert the string "1" to the integer 1
+                # This is the new parseInt()
+                id = int(path_params[2])
+            except IndexError:
+                pass # No route parameter exists: /animals
+            except ValueError:
+                pass # Request had trailing slash: /animals/
 
-        return (resource, id) # This is a tuple
+            return (resource, id) # This is a tuple
 
     
     
