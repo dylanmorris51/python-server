@@ -70,36 +70,55 @@ class HandleRequests(BaseHTTPRequestHandler):
         self._set_headers(200)
         response = {} # Default response
 
-        #Parse the URL and capture the tuple that is returned
-        (resource, id) = self.parse_url(self.path)
+        #Parse the URL and store enture tuple in a variable
+        parsed = self.parse_url(self.path)
 
-        if resource == "animals":
-            if id is not None:
-                response = f"{get_single_animal(id)}"
-            else:
-                response = f"{get_all_animals()}"
+        # Response from parse_url() is a tuple with 2 items
+        # which means the request was for '/animals' or '/animals/2'
 
-        if resource == "locations":
-            if id is not None:
-                response = f"{get_single_location(id)}"
+        if len(parsed) == 2:
+            (resource, id ) = parsed
 
-            else:
-                response = f"{get_all_locations()}"
 
-        if resource == "customers":
-            if id is not None:
-                response = f"{get_single_customer(id)}"
-            else:
-                response = f"{get_all_customers()}"
+            if resource == "animals":
+                if id is not None:
+                    response = f"{get_single_animal(id)}"
+                else:
+                    response = f"{get_all_animals()}"
 
-        if resource == "employees":
-            if id is not None:
-                response = f"{get_single_employee(id)}"
-            else:
-                response = f"{get_all_employees()}"
+            if resource == "locations":
+                if id is not None:
+                    response = f"{get_single_location(id)}"
+
+                else:
+                    response = f"{get_all_locations()}"
+
+            if resource == "customers":
+                if id is not None:
+                    response = f"{get_single_customer(id)}"
+                else:
+                    response = f"{get_all_customers()}"
+
+            if resource == "employees":
+                if id is not None:
+                    response = f"{get_single_employee(id)}"
+                else:
+                    response = f"{get_all_employees()}"
+
+            
+            # Response from parse_url() is a tuple with 3 items
+            # which means the request was for '/resource?parameter=value'
+            elif len(parsed) == 3:
+                (resource, key, value) = parsed
+
+                #is the resource 'customers; and was there a query param that specified the customer email as a filtering val?
+                if key == "email" and resource == "customers":
+                    response = get_customers_by_email(value)
+
+
 
         # This weird code sends a response back to the client
-        self.wfile.write(f"{response}".encode())
+            self.wfile.write(response.encode())
 
     # Here's a method on the class that overrides the parent's method.
     # It handles any POST request.
