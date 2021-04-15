@@ -116,7 +116,7 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = get_customers_by_email(value)
 
 
-
+        # ! why is this unknown word?
         # This weird code sends a response back to the client
             self.wfile.write(response.encode())
 
