@@ -2,35 +2,6 @@ import sqlite3
 import json
 from models import Animal
 
-# DATA FROM CHAPTER
-
-# ANIMALS = [
-#     {
-#         "id": 1,
-#         "name": "Snickers",
-#         "species": "Dog",
-#         "locationId": 1,
-#         "customerId": 4,
-#         "status": "Admitted"
-#     },
-#     {
-#         "id": 2,
-#         "name": "Gypsy",
-#         "species": "Dog",
-#         "locationId": 1,
-#         "customerId": 2,
-#         "status": "Admitted"
-#     },
-#     {
-#         "id": 3,
-#         "name": "Blue",
-#         "species": "Cat",
-#         "locationId": 2,
-#         "customerId": 1,
-#         "status": "Admitted"
-#     }
-# ]
-
 # Function to return all animals
 def get_all_animals():
     # Open a connection to the database
@@ -102,45 +73,29 @@ def get_single_animal(id):
         return json.dumps(animal.__dict__)
 
 
-# Function to create an animal which takes a dictionary as a parameter
+def get_animals_by_location(location_id):
 
-def create_animal(animal):
-    # Get the id value of the last animal in the list
-    max_id = ANIMALS[-1]["id"]
+    with sqlite3.connect("./kennel.db") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
 
-    # Add 1 to whatever that number is
-    new_id = max_id + 1
+        db_cursor.execute("""
+            SELECT
+                a.id,
+                a.name,
+                a.breed,
+                a.status,
+                a.location_id,
+                a.customer_id
+            FROM animal a
+            WHERE a.location_id = ?
+        """, (location_id,))
 
-    # Add an 'id' property to the animal dictionary
-    animal["id"] = new_id
+        animals = []
+        dataset = db_cursor.fetchall()
 
-    # Add the animal dictionary to the list
-    ANIMALS.append(animal)
+        for row in dataset:
+            animal = Animal(row['id'], row['name'], row['breed'], row['status'], row['location_id'], row['customer_id'])
+            animals.append(animal.__dict__)
 
-    # Return the dictionary with 'id' property added
-    return animal
-
-def delete_animal(id):
-    # Initial -1 value for animal index, in case one isn't found
-    animal_index = -1
-
-    # Iterate the ANIMALS list, but use enumerate() so that you
-    # can access the index value of each item
-    for index, animal in enumerate(ANIMALS):
-        if animal["id"] == id:
-            # Found the animal. Store the current index
-            animal_index = index
-    
-    # If the animal was found, use pop(int) to remove it from the list
-    if animal_index >= 0:
-        ANIMALS.pop(animal_index)
-
-
-def update_animal(id, new_animal):
-    # Iterate the list but use enumerate() so that
-    # you can access the index value of each item
-    for index, animal in enumerate(ANIMALS):
-        if animal["id"] == id:
-            # Found the animal. Update the value.
-            ANIMALS[index] = new_animal
-            break
+    return json.dumps(animals)

@@ -1,5 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from animals import get_all_animals, get_single_animal
+from animals import get_all_animals, get_single_animal, get_animals_by_location
 from locations import get_all_locations, get_single_location
 from customers import get_all_customers, get_single_customer, get_customers_by_email
 from employees import get_all_employees, get_single_employee
@@ -108,17 +108,19 @@ class HandleRequests(BaseHTTPRequestHandler):
             
             # Response from parse_url() is a tuple with 3 items
             # which means the request was for '/resource?parameter=value'
-            elif len(parsed) == 3:
-                (resource, key, value) = parsed
+        elif len(parsed) == 3:
+            (resource, key, value) = parsed
 
-                #is the resource 'customers; and was there a query param that specified the customer email as a filtering val?
-                if key == "email" and resource == "customers":
-                    response = get_customers_by_email(value)
+            #is the resource 'customers; and was there a query param that specified the customer email as a filtering val?
+            if key == "email" and resource == "customers":
+                response = get_customers_by_email(value)
 
+            elif key == "location_id" and resource == "animals":
+                response = get_animals_by_location(value)
 
-        # ! why is this unknown word?
+        
         # This weird code sends a response back to the client
-            self.wfile.write(response.encode())
+        self.wfile.write(response.encode())
 
     # Here's a method on the class that overrides the parent's method.
     # It handles any POST request.

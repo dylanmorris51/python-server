@@ -63,7 +63,8 @@ SELECT
     a.location_id,
     a.customer_id
 FROM animal a
-WHERE a.id = 3
+WHERE location_id = 1
+
 
 SELECT
     c.id,
@@ -93,4 +94,4 @@ select
     c.email,
     c.password
 from customer c
-p
+
