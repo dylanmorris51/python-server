@@ -85,3 +85,12 @@ SELECT
     l.address
 FROM location l
 WHERE l.id = 1
+
+select
+    c.id,
+    c.name,
+    c.address,
+    c.email,
+    c.password
+from customer c
+p
