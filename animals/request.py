@@ -186,3 +186,26 @@ def update_animal(id, new_animal):
     else:
         # Forces 204 response
         return True
+
+def create_animal(new_animal):
+    with sqlite3.connect("./kennel.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+            INSERT INTO Animal
+                ( name, breed, status, location_id, customer_id )
+            VALUES 
+                ( ?, ?, ?, ?, ?);
+        """, (
+            new_animal['name'],
+            new_animal['breed'],
+            new_animal['status'],
+            new_animal['location_id'],
+            new_animal['customer_id'],    
+            ))
+
+        id = db_cursor.lastrowid
+
+        new_animal['id'] = id
+
+    return json.dumps(new_animal)
