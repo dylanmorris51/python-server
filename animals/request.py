@@ -194,16 +194,16 @@ def create_animal(new_animal):
 
         db_cursor.execute("""
             INSERT INTO Animal
-                ( name, breed, status, location_id, treatment, customer_id )
+                ( name, breed, status, location_id, customer_id, treatment )
             VALUES 
-                ( ?, ?, ?, ?, ?);
+                ( ?, ?, ?, ?, ?, ?);
         """, (
             new_animal['name'],
             new_animal['breed'],
             new_animal['status'],
-            new_animal['location_id'],
-            new_animal['treatment'],
-            new_animal['customer_id'],    
+            new_animal['locationId'],
+            new_animal['customerId'],    
+            new_animal['treatment']
             ))
 
         id = db_cursor.lastrowid

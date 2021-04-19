@@ -117,3 +117,6 @@ JOIN customer c
 SELECT * FROM animal ORDER BY id DESC;
 
 ALTER TABLE 'Animal' ADD 'Treatment' TEXT
+
+UPDATE 'Animal'
+SET 'Treatment' = "20min walk twice daily"
