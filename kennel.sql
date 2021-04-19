@@ -115,3 +115,5 @@ JOIN customer c
     ON c.id = a.customer_id
 
 SELECT * FROM animal ORDER BY id DESC;
+
+ALTER TABLE 'Animal' ADD 'Treatment' TEXT

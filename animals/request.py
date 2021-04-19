@@ -19,6 +19,7 @@ def get_all_animals():
                 a.breed,
                 a.status,
                 a.location_id,
+                a.treatment,
                 a.customer_id,
                 l.name location_name,
                 l.address location_address,
@@ -46,7 +47,7 @@ def get_all_animals():
             # Note that the database fields are specified in
             # the exact order of the parameters defined in the
             # Animal class above
-            animal = Animal(row['id'], row['name'], row['breed'], row['status'], row['location_id'], row['customer_id'])
+            animal = Animal(row['id'], row['name'], row['breed'], row['status'], row['location_id'], row['treatment'], row['customer_id'])
 
             location = Locations(row['location_id'], row['location_name'], row['location_address'])
 
@@ -193,7 +194,7 @@ def create_animal(new_animal):
 
         db_cursor.execute("""
             INSERT INTO Animal
-                ( name, breed, status, location_id, customer_id )
+                ( name, breed, status, location_id, treatment, customer_id )
             VALUES 
                 ( ?, ?, ?, ?, ?);
         """, (
@@ -201,6 +202,7 @@ def create_animal(new_animal):
             new_animal['breed'],
             new_animal['status'],
             new_animal['location_id'],
+            new_animal['treatment'],
             new_animal['customer_id'],    
             ))
 
