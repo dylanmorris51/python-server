@@ -113,3 +113,10 @@ JOIN Location l
     ON l.id = a.location_id
 JOIN customer c
     ON c.id = a.customer_id
+
+SELECT * FROM animal ORDER BY id DESC;
+
+ALTER TABLE 'Animal' ADD 'Treatment' TEXT
+
+UPDATE 'Animal'
+SET 'Treatment' = "20min walk twice daily"

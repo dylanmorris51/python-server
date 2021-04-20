@@ -19,6 +19,7 @@ def get_all_animals():
                 a.breed,
                 a.status,
                 a.location_id,
+                a.treatment,
                 a.customer_id,
                 l.name location_name,
                 l.address location_address,
@@ -46,7 +47,7 @@ def get_all_animals():
             # Note that the database fields are specified in
             # the exact order of the parameters defined in the
             # Animal class above
-            animal = Animal(row['id'], row['name'], row['breed'], row['status'], row['location_id'], row['customer_id'])
+            animal = Animal(row['id'], row['name'], row['breed'], row['status'], row['location_id'], row['treatment'], row['customer_id'])
 
             location = Locations(row['location_id'], row['location_name'], row['location_address'])
 
@@ -186,3 +187,27 @@ def update_animal(id, new_animal):
     else:
         # Forces 204 response
         return True
+
+def create_animal(new_animal):
+    with sqlite3.connect("./kennel.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+            INSERT INTO Animal
+                ( name, breed, status, location_id, customer_id, treatment )
+            VALUES 
+                ( ?, ?, ?, ?, ?, ?);
+        """, (
+            new_animal['name'],
+            new_animal['breed'],
+            new_animal['status'],
+            new_animal['locationId'],
+            new_animal['customerId'],    
+            new_animal['treatment']
+            ))
+
+        id = db_cursor.lastrowid
+
+        new_animal['id'] = id
+
+    return json.dumps(new_animal)
